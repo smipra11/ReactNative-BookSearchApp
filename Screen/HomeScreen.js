@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity, TextInput, AsyncStorage, Image } from 'react-native';
 import BookCount from "../components/BookCount"
 import { Ionicons } from '@expo/vector-icons'
@@ -7,16 +7,16 @@ import firebase from 'firebase'
 
 import { snapshottoArray } from "../helpers/firebaseHelpers"
 import ListItem from "../components/ListItem"
-import{compose } from 'redux'
-import {connectActionSheet, ActionSheetProvider} from '@expo/react-native-action-sheet'
+import { compose } from 'redux'
+import { connectActionSheet, ActionSheetProvider } from '@expo/react-native-action-sheet'
 import { useSelector, useDispatch } from 'react-redux'
 import Swipeout from "react-native-swipeout"
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import * as ImageHelpers from "../helpers/ImageHelper"
 
 
-const  HomeScreen =(props)=> {
+const HomeScreen = (props) => {
   const [totalCount, settotalCount] = useState(0)
   const [readingCount, setreadingCount] = useState(0)
   const [readCount, setreadCount] = useState(0)
@@ -26,7 +26,7 @@ const  HomeScreen =(props)=> {
   const [booksReading, setbooksReading] = useState([])
   const [booksRead, setbooksRead] = useState([])
   const [currentUser, setcurrentUser] = useState([])
-  
+
   const user = props.navigation.getParam('user')
   const someRef = useRef(null)
 
@@ -50,15 +50,15 @@ const  HomeScreen =(props)=> {
   const markBooksAsRead = book => ({
     type: 'MARK_BOOK_AS_READ', payload: book
   })
-  const markBooksAsUnRead = book =>({
-    type:'MARK_BOOK_AS_UNREAD', payload:book
+  const markBooksAsUnRead = book => ({
+    type: 'MARK_BOOK_AS_UNREAD', payload: book
 
   })
-  const deletethisBook = book =>({
-    type: 'DELETE_BOOK',payload:book
+  const deletethisBook = book => ({
+    type: 'DELETE_BOOK', payload: book
   })
-  const updateBookImage = book =>({
-    type:'UPDATE_BOOK_IMAGE',payload:book
+  const updateBookImage = book => ({
+    type: 'UPDATE_BOOK_IMAGE', payload: book
   })
   //const user = useSelector(state => state.auth.currentUser);
   const { books } = useSelector(state => state.books)
@@ -77,7 +77,7 @@ const  HomeScreen =(props)=> {
       console.log("books are " + totalbooks)
       const booksArr = snapshottoArray(totalbooks)
       console.log(booksArr)
-    
+
 
 
 
@@ -101,9 +101,9 @@ const  HomeScreen =(props)=> {
 
 
   const handleaddBook = async book => {
-   
-  //someRef.current.setNativeProps({text:""})
-  someRef.current.setNativeProps({text:""})
+
+    //someRef.current.setNativeProps({text:""})
+    someRef.current.setNativeProps({ text: "" })
 
 
     try {
@@ -141,17 +141,16 @@ const  HomeScreen =(props)=> {
 
 
       dispatch(addBook({ name: book, read: false }))
-      
+
 
     } catch (error) {
       console.log(error)
 
     }
-   
+
 
   }
 
-  //settotalCount(totalCount + 1), setreadingCount(readingCount + 1))
 
   const hideaddnewBook = () => {
     setisnewbookVisible(!isnewbookVisible)
@@ -164,7 +163,7 @@ const  HomeScreen =(props)=> {
       await firebase.database().ref('books').child(user.uid)
         .child(selectedbook.key).update({ read: true })
 
-        dispatch(markBooksAsRead(selectedbook))
+      dispatch(markBooksAsRead(selectedbook))
 
     }
 
@@ -172,39 +171,39 @@ const  HomeScreen =(props)=> {
       console.log(error)
     }
 
-    
+
 
   }
 
 
-  const markasUnread = async(selectedbook,index) =>{
+  const markasUnread = async (selectedbook, index) => {
 
     try {
       await firebase.database().ref('books').child(user.uid)
         .child(selectedbook.key).update({ read: false })
 
       dispatch(markBooksAsUnRead(selectedbook))
-      
+
     } catch (error) {
       console.log(error)
-      
+
     }
   }
 
-  const deleteBook = async(selectedbook,index) =>{
+  const deleteBook = async (selectedbook, index) => {
     try {
       await firebase.database().ref('books').child(user.uid)
-      .child(selectedbook.key).remove()
+        .child(selectedbook.key).remove();
 
       dispatch(deletethisBook(selectedbook))
-      
+
     } catch (error) {
       console.log(error)
-      
+
     }
   }
 
-  
+
 
   uploadImage = async (image, selectedbook) => {
     const ref = firebase
@@ -227,7 +226,7 @@ const  HomeScreen =(props)=> {
         .child(selectedbook.key)
         .update({ image: downloadUrl });
 
-   
+
 
       return downloadUrl;
     } catch (error) {
@@ -241,10 +240,10 @@ const  HomeScreen =(props)=> {
     const result = await ImageHelpers.openImageLibrary();
 
     if (result) {
-      
+
       const downloadUrl = await uploadImage(result, selectedbook);
-      updateBookImage({...selectedbook,uri:downloadUrl})
-      
+      updateBookImage({ ...selectedbook, uri: downloadUrl })
+
     }
   };
 
@@ -252,10 +251,10 @@ const  HomeScreen =(props)=> {
     const result = await ImageHelpers.openCamera();
 
     if (result) {
-    
+
       const downloadUrl = await uploadImage(result, selectedbook);
-      updateBookImage({...selectedbook,uri:downloadUrl})
-      
+      updateBookImage({ ...selectedbook, uri: downloadUrl })
+
     }
   };
 
@@ -264,7 +263,7 @@ const  HomeScreen =(props)=> {
     // Same interface as https://facebook.github.io/react-native/docs/actionsheetios.html
     const options = ["Select from Photos", "Camera", "Cancel"];
     const cancelButtonIndex = 2;
-showActionSheetWithOptions(
+    showActionSheetWithOptions(
       {
         options,
         cancelButtonIndex
@@ -272,9 +271,9 @@ showActionSheetWithOptions(
       buttonIndex => {
         // Do something here depending on the button index selected
         if (buttonIndex == 0) {
-         openImageLibrary(selectedbook);
+          openImageLibrary(selectedbook);
         } else if (buttonIndex == 1) {
-         openCamera(selectedbook);
+          openCamera(selectedbook);
         }
       }
     );
@@ -287,80 +286,6 @@ showActionSheetWithOptions(
 
 
 
-
-
-  /*uploadImage = async(image,selectedbook) =>{
-    const ref =   firebase.storage().ref('books').child(user.uid).child(selectedbook.key)
-    
-    try {
-      
-    
-      const blob= await ImageHelpers.prepareblob(image.url)
-      
-     
-      const snapshot  =  await ref.put(blob, StorageMetadata({contentType : 'image/jpeg'}))
-      let downloadUrl =  await ref.getDownloadURL()
-
-      await firebase.database().ref('books').child(user.uid).child(selectedbook.key).update({image:downloadUrl})
-      
-      
-      return downloadUrl
-    } catch (error) {
-      console.log(error)
-      
-    }
-  
-  }
-
-
-  
-  
-
-
-
-
-
-
-
-openImageLibrary  = async (selectedbook) =>{
-   const result = await ImageHelpers.openImageLibrary()
-   console.log ("result is " + result)
-   if(result){
-   
-    const downloadUrl = await uploadImage(result,selectedbook)
-   }
- }
- openCamera = async(selectedbook) =>{
-
-  const result = await ImageHelpers.openCamera()
-  if (result){
-    alert('Image Click sucessfully')
-  }
- }
-  function  addBookImage (selectedbook) {
-    const options = ['Selected from Photos', 'Camera', 'Cancel'];
-
-  const cancelButtonIndex = 2;
-  
-
- showActionSheetWithOptions(
-    {
-      options,
-      cancelButtonIndex,
-     
-    },
-    buttonIndex => {
-      // Do something here depending on the button index selected
-      if(buttonIndex == 0){
-       openImageLibrary(selectedbook)
-      }
-      else{
-        openCamera(selectedbook)
-      }
-    },
-  );
-  */
-
   const renderitem = (item, index) => {
     let swipeoutButton = [
       {
@@ -371,7 +296,7 @@ openImageLibrary  = async (selectedbook) =>{
           </View>
         ),
         backgroundColor: "red",
-        onPress: () => deleteBook(item,index)
+        onPress: () => deleteBook(item, index)
 
       }
     ]
@@ -385,7 +310,7 @@ openImageLibrary  = async (selectedbook) =>{
           </View>
         ),
         backgroundColor: "#3c6E47DA",
-        onPress: () => markasRead(item,index)
+        onPress: () => markasRead(item, index)
 
 
       })
@@ -399,7 +324,7 @@ openImageLibrary  = async (selectedbook) =>{
           </View>
         ),
         backgroundColor: "#436E81",
-        onPress: () => markasUnread(item,index)
+        onPress: () => markasUnread(item, index)
 
 
       })
@@ -409,23 +334,23 @@ openImageLibrary  = async (selectedbook) =>{
 
 
 
-    return(
-    <Swipeout
-    style={{marginHorizontal:5,marginVertical:5}}
-    backgroundColor="#354D58DA" 
-    right={swipeoutButton}>
+    return (
+      <Swipeout
+        style={{ marginHorizontal: 5, marginVertical: 5 }}
+        backgroundColor="#354D58DA"
+        right={swipeoutButton}>
 
-      < ListItem 
-      onPress={()=>addBookImage(item)}
-      editable={true}item={item} >
-        {
-          item.read && (
-            <Ionicons name="md-checkmark" color="black" size={30} />
-          )  
-        }
+        < ListItem
+          onPress={() => addBookImage(item)}
+          editable={true} item={item} >
+          {
+            item.read && (
+              <Ionicons name="md-checkmark" color="black" size={30} />
+            )
+          }
 
-      </ListItem >
-    </Swipeout>
+        </ListItem >
+      </Swipeout>
     )
   }
 
@@ -445,9 +370,9 @@ openImageLibrary  = async (selectedbook) =>{
         <View style={{ height: 50, flexDirection: 'row', margin: 5 }} >
           <TextInput
             onChangeText={(text) => settextInputData(text)} style={{ flex: 1, fontSize: 22, color: 'white', backgroundColor: 'transparent' }}
-            placeholder="Enter  Book  Name" 
+            placeholder="Enter  Book  Name"
             ref={someRef}
-            value={textInputData}/>
+            value={textInputData} />
         </View>
 
 
@@ -474,16 +399,16 @@ openImageLibrary  = async (selectedbook) =>{
 
       </View>
 
-     
+
       <SafeAreaView />
     </View>
   );
 }
 
 
- export default connect(
-   connectActionSheet
- )(HomeScreen)
+export default connect(
+  connectActionSheet
+)(HomeScreen)
 
 const styles = StyleSheet.create({
   container: {

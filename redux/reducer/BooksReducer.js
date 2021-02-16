@@ -29,7 +29,10 @@ const books = (state = initialState, action) => {
                         return { ...book, read: true }
                     }
                     return book;
-                })
+                }),
+                booksReading:state.booksReading.filter(
+                    book =>book.name !== action.payload.name),
+                    booksRead:[...state.booksRead,action.payload]
             }
 
         case 'MARK_BOOK_AS_UNREAD':
@@ -48,6 +51,7 @@ const books = (state = initialState, action) => {
             }
             case 'DELETE_BOOK':
                 return{
+                    ...state,
                     books:state.books.filter(book =>book.name!== action.payload.name),
                     booksReading:state.booksReading.filter(book =>book.name!== action.payload.name),
                     booksRead:state.booksRead.filter(book =>book.name!== action.payload.name),
