@@ -14,7 +14,7 @@ const LoginScreen = (props) =>{
         if(email,password){
             try{
                 const response = await firebase.auth().signInWithEmailAndPassword(email,password)
-               console.log(password)
+               console.log(response)
             }catch (error){
                 alert("user with that email does not exit,please sign in")
                
