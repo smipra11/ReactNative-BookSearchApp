@@ -10,7 +10,7 @@ Redux for State Managment
 React  Navigation
 firebase for Authentication and real time database.
 
-![](android1.png)
+
 ![](android2.png)
 
 
