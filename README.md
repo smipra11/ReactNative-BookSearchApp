@@ -11,6 +11,8 @@ React  Navigation
 firebase for Authentication and real time database.
 
 
-![](android2.png)
+<img align='left' src="./new2.png" width="230" style="padding: 5px"> <img align='left' src="./new1.png" width="230" style="padding: 5px">
+
+
 
 
