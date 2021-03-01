@@ -10,7 +10,7 @@ const BooksReadCount = () =>{
     
     return(
         <View style={styles.container}>
-          <Text>{booksRead.length || 0}</Text>
+          <Text style={{fontSize:18}}>{booksRead.length || 0}</Text>
         </View>
     )
     

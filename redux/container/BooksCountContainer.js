@@ -13,7 +13,7 @@ const BooksCountContainer = ({type}) =>{
     
     return(
         <View style={styles.container}>
-          <Text>{books.length }</Text>
+          <Text style={{fontSize:18}}>{books.length }</Text>
         </View>
     )
     

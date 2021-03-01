@@ -90,9 +90,15 @@ const HomeTabNavigator = createBottomTabNavigator({
 }, {
   tabBarOptions: {
     style: {
-      backgroundColor: '#354D58DA'
+      backgroundColor: '#354D58DA',
+      
     },
-    activeTintColor: "white"
+    labelStyle: {
+      fontSize: 15,
+      fontWeight:'bold'
+    },
+    activeTintColor: "white",
+    
   }
 })
 

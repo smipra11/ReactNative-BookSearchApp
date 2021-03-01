@@ -61,10 +61,10 @@ const LoginScreen = (props) =>{
         <CustomActionButton style={Styles.loginButton} 
         onPress= {onSignIn}>
         
-            <Text style={{color:'white',fontWeight:'200'}}>Login</Text>
+            <Text style={{color:'white',fontWeight:'200',fontSize:18}}>Login</Text>
         </CustomActionButton>
         <CustomActionButton style={Styles.loginButton} onPress ={onSignUp}>
-        <Text style={{color:'white',fontWeight:'200'}}>Signup</Text>
+        <Text style={{color:'white',fontWeight:'200',fontSize:18}}>Signup</Text>
 
         </CustomActionButton>
         </View>
@@ -83,8 +83,11 @@ const Styles = StyleSheet.create({
 
     },
     TextInput:{
-        height:50,
+        height:60,
+        width: '70%',
         borderWidth:0.5,
+        borderRadius:1.0,
+
         borderColor:'gray',
         marginHorizontal:40,
         marginBottom:15,
